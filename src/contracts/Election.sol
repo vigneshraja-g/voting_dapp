@@ -24,13 +24,14 @@ contract Election {
 
     function addCandidate(string memory _name) private {
         candidatesCount++;
-        candidates[candidatesCount] = candidate(candidatesCount, _name, 0);
+        candidates[candidatesCount] = candidate({index:candidatesCount, name:_name, votecount:0});
     }
 
-    function voting(string memory _name, uint256 _index) public {
-        require(voters[msg.sender].voted == false, "already voted");
+    function voting(string memory _name, uint256 _index) public returns(bool) {
+        require(voters[msg.sender].voted == false, "Already voted");
         candidates[_index].votecount++;
         voters[msg.sender] = voter(_name, _index, true);
+        return true;
     }
 
     function getwinner() public view returns (uint256) {
