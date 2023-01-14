@@ -1,8 +1,7 @@
-const DecentralBank = artifacts.require('DecentralBank');
+const Election = artifacts.require('Election');
 
 
 module.exports=async function(deployer, network, accounts){
 
-    await deployer.deploy(DecentralBank)
-    const decentralBank = await DecentralBank.deployed()
+    await deployer.deploy(Election)
 };
