@@ -16,6 +16,7 @@ contract Election {
     mapping(uint256 => candidate) public candidates;
     mapping(address => voter) public voters;
     uint256 public candidatesCount;
+    uint256 public votersCount;
 
     constructor() {
         addCandidate("Canndidate 1");
@@ -29,6 +30,7 @@ contract Election {
 
     function voting(string memory _name, uint256 _index) public returns(bool) {
         require(voters[msg.sender].voted == false, "Already voted");
+        votersCount++;
         candidates[_index].votecount++;
         voters[msg.sender] = voter(_name, _index, true);
         return true;

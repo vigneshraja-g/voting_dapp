@@ -17,9 +17,11 @@ function App() {
   useEffect(() => {
     loadWeb3();
     loadBlockchainData();
+  }, []);
+  useEffect(()=>{
     getCandidates();
     getWinner();
-  }, []);
+  },[electionSys])
 
   const loadWeb3 = async () => {
     if (window.ethereum) {
@@ -66,6 +68,7 @@ function App() {
   };
 
   const getCandidates = async () => {
+    console.log(electionSys)
     var x = await electionSys.methods.candidatesCount().call();
 
     let arr = [];
@@ -105,13 +108,17 @@ function App() {
             <hr />
             <h4>Winner</h4>
             <Row>
-              {winner === '0' ? (
+              {winner === "0" ? (
                 <span>-</span>
               ) : (
                 <span>
                   {candidates.map((candidate) => (
                     <span>
-                      {candidate.id === winner && <span>{candidate.name} - {candidate.votes} votes</span>}
+                      {candidate.id === winner && (
+                        <span>
+                          {candidate.name} - {candidate.votes} votes
+                        </span>
+                      )}
                     </span>
                   ))}
                 </span>
@@ -128,8 +135,8 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                {candidates.map((candidate) => (
-                  <tr>
+                {candidates.map((candidate, i) => (
+                  <tr key={i}>
                     <td>{candidate.id}</td>
                     <td>{candidate.name}</td>
                     <td>{candidate.votes}</td>
